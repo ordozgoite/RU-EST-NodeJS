@@ -1,9 +1,18 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const app = express();
+const customersRoute = require('./routes/customer');
 require("dotenv").config();
 
+const app = express();
 const port = 3000;
+mongoose.set("strictQuery", true);
+
+//middlewares
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
+
+// routes
+app.use('/api/Customers', customersRoute);
 
 // connect to mongodb atlas
 mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true })
